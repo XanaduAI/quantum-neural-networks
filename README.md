@@ -1,8 +1,10 @@
-<img align="left" src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo.png">
+<img align="left" src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo.png" width=300px>
 
 # Continuous-variable quantum neural networks
 
 This repository contains the source code used to produce the results presented in *"Continuous-variable quantum neural networks"* [arXiv:1806.06871](https://arxiv.org/abs/1806.06871).
+
+<br/>
 
 ## Contents
 
@@ -18,9 +20,7 @@ This repository contains the source code used to produce the results presented i
 
 * **Tetronimo learning**: coming soon.
 
-<p align="center">
-	<img src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo_gif.gif">
-</p>
+<img align='right' src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo_gif.gif">
 
 
 ## Requirements
