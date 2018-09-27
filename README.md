@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/XanaduAI/quantum-learning/blob/master/static/tetronimo.gif">
+<img align="left" src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo.gif">
 
 # Continuous-variable quantum neural networks
 
@@ -7,7 +7,7 @@ This repository contains the source code used to produce the results presented i
 ## Contents
 
 <p align="center">
-	<img src="https://github.com/XanaduAI/quantum-learning/blob/master/static/function_fitting.png">
+	<img src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/function_fitting.png">
 </p>
 
 * **Function fitting**: The folder `function_fitting` contains the Python script `function_fitting.py`, which automates the process of fitting classical functions using continuous-variable (CV) variational quantum circuits. Simply specify the function you would like to fit, along with other hyperparameters, and this script automatically constructs and optimizes the CV quantum neural network. In addition, training data is also provided.
@@ -19,7 +19,7 @@ This repository contains the source code used to produce the results presented i
 * **Tetronimo learning**: coming soon.
 
 <p align="center">
-	<img src="https://github.com/XanaduAI/quantum-learning/blob/master/static/tetronimo.gif">
+	<img src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo.gif">
 </p>
 
 
