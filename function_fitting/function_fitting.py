@@ -220,7 +220,7 @@ end_time = time.time()
 
 test_predictions = session.run(mean_x, feed_dict={input_data: test_data})
 
-np.save('sine_test_predictions.npz', test_predictions)
+np.save('sine_test_predictions', test_predictions)
 
 print("Elapsed time is {} seconds".format(np.round(end_time - start_time)))
 
