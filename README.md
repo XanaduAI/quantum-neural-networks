@@ -1,8 +1,14 @@
+<img align="left" src="https://github.com/XanaduAI/quantum-learning/blob/master/static/tetronimo.gif">
+
 # Continuous-variable quantum neural networks
 
 This repository contains the source code used to produce the results presented in *"Continuous-variable quantum neural networks"* [arXiv:1806.06871](https://arxiv.org/abs/1806.06871).
 
 ## Contents
+
+<p align="center">
+	<img src="https://github.com/XanaduAI/quantum-learning/blob/master/static/function_fitting.png">
+</p>
 
 * **Function fitting**: The folder `function_fitting` contains the Python script `function_fitting.py`, which automates the process of fitting classical functions using continuous-variable (CV) variational quantum circuits. Simply specify the function you would like to fit, along with other hyperparameters, and this script automatically constructs and optimizes the CV quantum neural network. In addition, training data is also provided.
 
@@ -11,6 +17,11 @@ This repository contains the source code used to produce the results presented i
 * **Quantum fraud detection**: coming soon.
 
 * **Tetronimo learning**: coming soon.
+
+<p align="center">
+	<img src="https://github.com/XanaduAI/quantum-learning/blob/master/static/tetronimo.gif">
+</p>
+
 
 ## Requirements
 
