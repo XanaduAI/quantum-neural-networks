@@ -31,14 +31,12 @@ depth = 6
 
 # Fock basis truncation
 cutoff = 10
-# Number of batches in optimization
-reps = 10000
 
 # Label for simulation
 simulation_label = 1
 
-# Number of batches to use in the optimization
-batch_size = 24
+# Threshold probability for a transaction to be considered as genuine
+threshold = 0.61
 
 # Random initialization of gate parameters
 sdev_photon = 0.1
@@ -52,31 +50,26 @@ kerr_clip = 1
 # If loading from checkpoint, previous batch number reached
 ckpt_val = 0
 
-# Number of repetitions between each output to TensorBoard
-tb_reps = 100
-# Number of repetitions between each model save
-savr_reps = 1000
-
 model_string = str(simulation_label)
 
 # Target location of output
 folder_locator = './outputs/'
 
-# Locations of TensorBoard and model save outputs
-board_string = folder_locator + 'tensorboard/' + model_string + '/'
+# Locations of model saves and where confusion matrix will be saved
 checkpoint_string = folder_locator + 'models/' + model_string + '/'
+confusion_string = folder_locator + 'confusion/' + model_string + '/'
 
 # ===================================================================================
 #                                   Loading the training data
 # ===================================================================================
 
-# Data outputted from data_processor.py
-data_genuine = np.loadtxt('creditcard_genuine_1.csv', delimiter=',')
-data_fraudulent = np.loadtxt('creditcard_fraudulent_1.csv', delimiter=',')
+# Loading combined dataset with extra genuine datapoints unseen in training
+data_combined = np.loadtxt('./creditcard_combined_2_big.csv', delimiter=',')
 
-# Combining genuine and fraudulent data
-data_combined = np.append(data_genuine, data_fraudulent, axis=0)
-data_points = len(data_combined)
+# Set to a size so that the data can be equally split up with no remainder
+batch_size = 29
+
+data_combined_points = len(data_combined)
 
 # ===================================================================================
 #                                   Setting up the classical NN input
@@ -206,33 +199,26 @@ state = eng.run('tf', cutoff_dim=cutoff, eval=False, batch_size=batch_size)
 ket = state.ket()
 
 # ===================================================================================
-#                                   Setting up cost function
+#                                   Extracting probabilities
 # ===================================================================================
 
 # Classifications for whole batch: rows act as data points in the batch and columns
 # are the one-hot classifications
 classification = tf.placeholder(shape=[batch_size, 2], dtype=tf.int32)
 
-func_to_minimise = 0
+prob = []
 
-# Building up the function to minimize by looping through batch
 for i in range(batch_size):
-    # Probabilities corresponding to a single photon in either mode
-    prob = tf.abs(ket[i, classification[i, 0], classification[i, 1]]) ** 2
-    # These probabilities should be optimised to 1
-    func_to_minimise += (1.0 / batch_size) * (prob - 1) ** 2
-
-# Defining the cost function
-cost_func = func_to_minimise
-tf.summary.scalar('Cost', cost_func)
+    # Finds the probability of a photon being in either mode
+    prob.append([tf.abs(ket[i, 1, 0]) ** 2, tf.abs(ket[i, 0, 1]) ** 2])
 
 # ===================================================================================
-#                                   Training
+#                                   Testing performance
 # ===================================================================================
 
-# We choose the Adam optimizer
-optimiser = tf.train.AdamOptimizer()
-training = optimiser.minimize(cost_func)
+# Defining array of thresholds from 0 to 1 to consider in the ROC curve
+thresholds_points = 101
+thresholds = np.linspace(0, 1, num=thresholds_points)
 
 # Saver/Loader for outputting model
 saver = tf.train.Saver(parameters)
@@ -240,88 +226,54 @@ saver = tf.train.Saver(parameters)
 session = tf.Session()
 session.run(tf.global_variables_initializer())
 
-# Load previous model if non-zero ckpt_val is specified
-if ckpt_val != 0:
-    saver.restore(session, checkpoint_string + 'Sess.ckpt-' + str(ckpt_val))
+saver.restore(session, checkpoint_string + 'Sess.ckpt-' + str(ckpt_val))
 
-# TensorBoard writer
-writer = tf.summary.FileWriter(board_string)
-merge = tf.summary.merge_all()
+# Split up data to process in batches
+data_split = np.split(data_combined, data_combined_points / batch_size)
 
-counter = ckpt_val
+# Defining confusion table
+confusion_table = np.zeros((thresholds_points, 2, 2))
 
-# Tracks optimum value found (set high so first iteration encodes value)
-opt_val = 1e20
-# Batch number in which optimum value occurs
-opt_position = 0
-# Flag to detect if new optimum occured in last batch
-new_opt = False
+for batch in data_split:
+    # Input data (provided as principal components)
+    data_points_principal_components = batch[:, 1:input_neurons + 1]
+    # Data classes
+    classes = batch[:, -1]
 
-while counter <= reps:
+    # Probabilities outputted from circuit
+    prob_run = session.run(prob, feed_dict={input_classical_layer: data_points_principal_components})
 
-    # Shuffles data to create new epoch
-    np.random.shuffle(data_combined)
+    for i in range(batch_size):
+        # Calculate probabilities of photon coming out of either mode
+        p = prob_run[i]
+        # Normalize to these two events (i.e. ignore all other outputs)
+        p = p / np.sum(p)
 
-    # Splits data into batches
-    split_data = np.split(data_combined, data_points / batch_size)
+        # Predicted class is a list corresponding to threshold probabilities
+        predicted_class = []
 
-    for batch in split_data:
-
-        if counter > reps:
-            break
-
-        # Input data (provided as principal components)
-        data_points_principal_components = batch[:, 1:input_neurons + 1]
-        # Data classes
-        classes = batch[:, -1]
-
-        # Encoding classes into one-hot form
-        one_hot_input = np.zeros((batch_size, 2))
-
-        for i in range(batch_size):
-            if int(classes[i]) == 0:
-                # Encoded such that genuine transactions should be outputted as a photon in the first mode
-                one_hot_input[i] = [1, 0]
+        for j in range(thresholds_points):
+            # If probability of a photon exiting first mode is larger than threshold, attribute as genuine
+            if p[0] > thresholds[j]:
+                predicted_class.append(0)
             else:
-                one_hot_input[i] = [0, 1]
+                predicted_class.append(1)
 
-        # Output to TensorBoard
-        if counter % tb_reps == 0:
-            [summary, training_run, func_to_minimise_run] = session.run([merge, training, func_to_minimise],
-                                                                        feed_dict={
-                                                                            input_classical_layer:
-                                                                                data_points_principal_components,
-                                                                            classification: one_hot_input})
-            writer.add_summary(summary, counter)
+        actual_class = classes[i]
 
-        else:
-            # Standard run of training
-            [training_run, func_to_minimise_run] = session.run([training, func_to_minimise], feed_dict={
-                input_classical_layer: data_points_principal_components, classification: one_hot_input})
+        # Constructing confusion table
+        for j in range(2):
+            for k in range(2):
+                for l in range(thresholds_points):
+                    if actual_class == j and predicted_class[l] == k:
+                        confusion_table[l, j, k] += 1
 
-        # Ensures cost function is well behaved
-        if np.isnan(func_to_minimise_run):
-            compute_grads = session.run(optimiser.compute_gradients(cost_func),
-                                        feed_dict={input_classical_layer: data_points_principal_components,
-                                                   classification: one_hot_input})
-            if not os.path.exists(checkpoint_string):
-                os.makedirs(checkpoint_string)
-            # If cost function becomes NaN, output value of gradients for investigation
-            np.save(checkpoint_string + 'NaN.npy', compute_grads)
-            print('NaNs outputted - leaving at step ' + str(counter))
-            raise SystemExit
+# Renormalizing confusion table
+for i in range(thresholds_points):
+    confusion_table[i] = confusion_table[i] / data_combined_points * 100
 
-        # Test to see if new optimum found in current batch
-        if func_to_minimise_run < opt_val:
-            opt_val = func_to_minimise_run
-            opt_position = counter
-            new_opt = True
+if not os.path.exists(confusion_string):
+    os.makedirs(confusion_string)
 
-        # Save model every fixed number of batches, provided a new optimum value has occurred
-        if (counter % savr_reps == 0) and (i != 0) and new_opt and (not np.isnan(func_to_minimise_run)):
-            if not os.path.exists(checkpoint_string):
-                os.makedirs(checkpoint_string)
-            saver.save(session, checkpoint_string + 'Sess.ckpt', global_step=counter)
-            np.savetxt(checkpoint_string + 'Out.txt', [opt_position, opt_val])
-
-        counter += 1
+# Save as numpy array
+np.save(confusion_string + 'confusion_table.npy', confusion_table)
