@@ -16,8 +16,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plot_confusion_matrix
 
+# Label for simulation
+simulation_label = 1
+
 # Loading confusion table
-confusion_table = np.load('./outputs/confusion/1/confusion_table.npy')
+confusion_table = np.load('./outputs/confusion/' + str(simulation_label) + '/confusion_table.npy')
 
 # Defining array of thresholds from 0 to 1 to consider in the ROC curve
 thresholds_points = 101
