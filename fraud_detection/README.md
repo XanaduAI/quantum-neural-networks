@@ -22,6 +22,7 @@ python3 fraud_detection.py
 ```
 | WARNING: this script can take a long time to run. On a typical PC, it may take hours to arrive at a well-trained model. |
 | --- |
+
 The model is periodically saved during training, and progress can be monitored by launching TensorBoard in the terminal:
 ```bash
 tensorboard --logdir=outputs/tensorboard/simulation_label
@@ -34,6 +35,7 @@ python3 testing.py
 ```
 | WARNING: this script can take a long time to run|
 | --- |
+
 Here, the user must choose a value for `simulation_label` in `testing.py` to select a pre-trained model, as well as `ckpt_val` to select the number of batch repetitions to start testing from.
 
 The output of testing is a confusion table, which can be found as a numpy array in `outputs/confusion/simulation_label`. The confusion table is given for multiple threshold probabilities for a transaction to be considered as genuine.
