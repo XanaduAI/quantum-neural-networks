@@ -35,9 +35,6 @@ cutoff = 10
 # Label for simulation
 simulation_label = 1
 
-# Threshold probability for a transaction to be considered as genuine
-threshold = 0.61
-
 # Random initialization of gate parameters
 sdev_photon = 0.1
 sdev = 1
