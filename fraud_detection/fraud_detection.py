@@ -321,7 +321,8 @@ while counter <= reps:
         if (counter % savr_reps == 0) and (i != 0) and new_opt and (not np.isnan(func_to_minimise_run)):
             if not os.path.exists(checkpoint_string):
                 os.makedirs(checkpoint_string)
-            saver.save(session, checkpoint_string + 'Sess.ckpt', global_step=counter)
-            np.savetxt(checkpoint_string + 'Out.txt', [opt_position, opt_val])
+            saver.save(session, checkpoint_string + 'sess.ckpt', global_step=counter)
+            # Saves position of optimum and corresponding value of cost function
+            np.savetxt(checkpoint_string + 'optimum.txt', [opt_position, opt_val])
 
         counter += 1

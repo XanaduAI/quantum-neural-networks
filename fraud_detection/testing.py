@@ -226,7 +226,7 @@ saver = tf.train.Saver(parameters)
 session = tf.Session()
 session.run(tf.global_variables_initializer())
 
-saver.restore(session, checkpoint_string + 'Sess.ckpt-' + str(ckpt_val))
+saver.restore(session, checkpoint_string + 'sess.ckpt-' + str(ckpt_val))
 
 # Split up data to process in batches
 data_split = np.split(data_combined, data_combined_points / batch_size)
