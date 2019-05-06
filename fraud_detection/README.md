@@ -24,7 +24,7 @@ The model is periodically saved during training, and progress can be monitored b
 ```bash
 tensorboard --logdir=outputs/tensorboard/simulation_label
 ```
-where the user replaces `simulation_label` with the chosen number/string used in `fraud_detection.py` (the default is `1`).
+where `simulation_label` is the name used to refer to a particular run of the script `fraud_detection.py` (this is specified within the file itself; the default is `1`).
 
 Testing can be performed with:
 ```bash
