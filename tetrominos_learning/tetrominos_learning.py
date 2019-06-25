@@ -219,7 +219,7 @@ overlap_cost = tf.reduce_mean((overlaps - 1) ** 2)
 # State norm cost function
 norm_cost = tf.reduce_sum((trace - 1) ** 2)
 
-cost = overlap_cost + norm_weight * norm_cost
+cost = tf.to_float(overlap_cost) + norm_weight * norm_cost
 
 # ====================================================
 # 	TensorBoard logging of cost functions and images
