@@ -109,7 +109,7 @@ disps_alpha = tf.constant(
 )
 disps_beta = tf.constant(
     [alpha, alpha, -alpha, -alpha, 1.0j * alpha, 1.0j * alpha, -1.0j * alpha]
-)  # , 1.65615])
+)
 
 # Trainable weights of the quantum network.
 with tf.name_scope('variables'):
