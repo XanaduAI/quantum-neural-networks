@@ -197,10 +197,10 @@ ket = state.ket()
 # Projection on the subspace of up to im_dim-1 photons for each mode.
 ket_reduced = ket[:, :im_dim, :im_dim]
 norm = tf.sqrt(tf.abs(tf.reduce_sum(tf.conj(ket_reduced) * ket_reduced, axis=[1, 2])))
-norm_inv = tf.expand_dims(
-    tf.expand_dims(tf.cast(1.0 / norm, dtype=tf.complex64), axis=[1]), axis=[1]
-)
-ket_processed = ket_reduced * norm_inv
+# Since norm has shape [num_images] while ket_reduced has shape [num_images,im_dim,im_dim]
+# we need to add 2 extra dimensions to the norm tensor.
+norm_extended = tf.reshape(norm, [num_images, 1, 1])
+ket_processed = ket_reduced / tf.cast(norm_extended, dtype=tf.complex64)
 
 # ====================================================
 # 		 Definition of the loss function
