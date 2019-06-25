@@ -109,7 +109,7 @@ alpha = 1.4
 # Combinations of two-mode amplitudes corresponding to different final images
 disps_alpha = tf.constant(
     [alpha, -alpha, alpha, -alpha, 1.0j * alpha, -1.0j * alpha, 1.0j * alpha]
-)  # , 0.3638])
+)
 disps_beta = tf.constant(
     [alpha, alpha, -alpha, -alpha, 1.0j * alpha, 1.0j * alpha, -1.0j * alpha]
 )  # , 1.65615])
