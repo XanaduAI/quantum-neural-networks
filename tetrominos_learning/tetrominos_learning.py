@@ -275,7 +275,7 @@ with tf.Session() as session:
             writer.add_summary(summary, i+1)
             
             # save trained weights
-            os.makedirs(save_string,exist_ok=True)
+            os.makedirs(save_string, exist_ok=True)
             np.save(save_string+'trained_params.npy', params_numpy)
             
             # save output images as numpy arrays
