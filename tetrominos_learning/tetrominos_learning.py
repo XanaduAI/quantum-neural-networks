@@ -235,7 +235,7 @@ tf.summary.scalar('Overlap cost', overlap_cost)
 
 # Output images with and without subspace projection.
 images_out = tf.abs(ket_processed)
-images_out_big =tf.abs(ket)
+images_out_big = tf.abs(ket)
 tf.summary.image('image_out', tf.expand_dims(images_out, axis=3), max_outputs=num_images)
 tf.summary.image('image_out_big', tf.expand_dims(images_out_big, axis=3), max_outputs=num_images)
 
