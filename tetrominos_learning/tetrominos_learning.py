@@ -193,7 +193,7 @@ with engine:
 # Symbolic evaluation of the output state
 state = engine.run('tf', cutoff_dim=cutoff, eval=False, batch_size=num_images)
 ket = state.ket()
-trace = state.trace()
+trace = tf.abs(state.trace())
 
 # Projection on the subspace of up to im_dim-1 photons for each mode.
 ket_reduced = ket[:, :im_dim, :im_dim]
@@ -219,7 +219,7 @@ overlap_cost = tf.reduce_mean((overlaps - 1) ** 2)
 # State norm cost function
 norm_cost = tf.reduce_sum((trace - 1) ** 2)
 
-cost = tf.to_float(overlap_cost) + norm_weight * norm_cost
+cost = overlap_cost + norm_weight * norm_cost
 
 # ====================================================
 # 	TensorBoard logging of cost functions and images
