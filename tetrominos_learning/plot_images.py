@@ -29,22 +29,22 @@ save_string = folder_locator + 'models/' + model_string + '/'
 
 
 # Loading of images
-images_out =np.load(save_string+'images_out.npy')
-images_out_big =np.load(save_string+'images_out_big.npy')
+images_out = np.load(save_string + 'images_out.npy')
+images_out_big = np.load(save_string + 'images_out_big.npy')
 
 num_labels = 7
 plot_scale = 1
 
 # Plotting of the final image.
 fig_images, axs = plt.subplots(
-    nrows=2, ncols=num_labels,figsize=(num_labels*plot_scale,2*plot_scale)
-    )
+    nrows=2, ncols=num_labels, figsize=(num_labels * plot_scale, 2 * plot_scale)
+)
 
-all_images = [images_out,images_out_big]
+all_images = [images_out, images_out_big]
 for i in range(2):
     for lable in range(num_labels):
-        ax=axs[i][lable]
-        ax.imshow(all_images[i][lable],cmap='gray')
+        ax = axs[i][lable]
+        ax.imshow(all_images[i][lable], cmap='gray')
         ax.axis('off')
         ax.set_xticklabels([])
         ax.set_yticklabels([])
