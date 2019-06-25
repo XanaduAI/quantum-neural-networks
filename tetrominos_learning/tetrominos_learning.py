@@ -49,9 +49,6 @@ tf.set_random_seed(1)
 # Depth of the quantum network (suggested: 25)
 depth = 2
 
-# number of modes
-modes = 2
-
 # Fock basis truncation
 cutoff = 11  # suggested value: 11
 
@@ -181,8 +178,8 @@ def layer(l):
         Kgate(tf.clip_by_value(kappa2[l], -kerr_clip, kerr_clip)) | q[1]
 
 
-# StrawberryFields quantum simulator
-engine, q = sf.Engine(num_subsystems=modes)
+# StrawberryFields quantum simulator of 2 optical modes
+engine, q = sf.Engine(num_subsystems=2)
 
 # Definition of the CV quantum network
 with engine:
