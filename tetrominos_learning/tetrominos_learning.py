@@ -26,7 +26,7 @@ os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 # =============================================
-#         Settings and hyperparameters
+#   Settings and hyperparameters
 # =============================================
 
 # Model name
@@ -73,7 +73,7 @@ kerr_clip = 1
 norm_weight = 100.0
 
 # ====================================================
-#        Manual definition of target images
+#   Manual definition of target images
 # ====================================================
 
 train_images = np.zeros((num_images, im_dim, im_dim))
@@ -92,7 +92,7 @@ Z[0, 0] = Z[0, 1] = Z[1, 1] = Z[1, 2] = 1 / np.sqrt(4)
 train_images = [L, O, T, I, S, J, Z]
 
 # ====================================================
-#    Initialization of TensorFlow variables
+#   Initialization of TensorFlow variables
 # ====================================================
 
 print('Initializing TensorFlow graph...')
@@ -204,7 +204,7 @@ norm_extended = tf.reshape(norm, [num_images, 1, 1])
 ket_processed = ket_reduced / tf.cast(norm_extended, dtype=tf.complex64)
 
 # ====================================================
-# 		 Definition of the loss function
+#   Definition of the loss function
 # ====================================================
 
 # Target images
@@ -222,7 +222,7 @@ norm_cost = tf.reduce_sum((trace - 1) ** 2)
 cost = overlap_cost + norm_weight * norm_cost
 
 # ====================================================
-# 	TensorBoard logging of cost functions and images
+#   TensorBoard logging of cost functions and images
 # ====================================================
 
 tf.summary.scalar('Cost', cost)
@@ -232,6 +232,7 @@ tf.summary.scalar('Overlap cost', overlap_cost)
 # Output images with and without subspace projection.
 images_out = tf.abs(ket_processed) ** 2
 images_out_big = tf.abs(ket) ** 2
+
 tf.summary.image(
     'image_out', tf.expand_dims(images_out, axis=3), max_outputs=num_images
 )
