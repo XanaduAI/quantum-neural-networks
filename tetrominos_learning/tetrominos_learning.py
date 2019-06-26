@@ -47,7 +47,7 @@ init_time = time.time()
 tf.set_random_seed(1)
 
 # Depth of the quantum network (suggested: 25)
-depth = 2
+depth = 25
 
 # Fock basis truncation
 cutoff = 11  # suggested value: 11
@@ -56,10 +56,10 @@ cutoff = 11  # suggested value: 11
 im_dim = 4
 
 # Number of optimization steps (suggested: 50000)
-reps = 20
+reps = 50000
 
 # Number of steps between data logging/saving.
-partial_reps = 2
+partial_reps = 1000
 
 # Number of images to encode (suggested: 7)
 num_images = 7
