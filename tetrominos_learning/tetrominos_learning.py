@@ -241,7 +241,7 @@ merge = tf.summary.merge_all()
 
 
 # ====================================================
-# 					Training
+#   Training
 # ====================================================
 
 # Optimization algorithm (Adam optimizer)
