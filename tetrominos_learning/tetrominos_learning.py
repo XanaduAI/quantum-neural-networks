@@ -232,8 +232,12 @@ tf.summary.scalar('Overlap cost', overlap_cost)
 # Output images with and without subspace projection.
 images_out = tf.abs(ket_processed) ** 2
 images_out_big = tf.abs(ket) ** 2
-tf.summary.image('image_out', tf.expand_dims(images_out, axis=3), max_outputs=num_images)
-tf.summary.image('image_out_big', tf.expand_dims(images_out_big, axis=3), max_outputs=num_images)
+tf.summary.image(
+    'image_out', tf.expand_dims(images_out, axis=3), max_outputs=num_images
+)
+tf.summary.image(
+    'image_out_big', tf.expand_dims(images_out_big, axis=3), max_outputs=num_images
+)
 
 # TensorBoard writer and summary
 writer = tf.summary.FileWriter(board_string)
@@ -258,29 +262,28 @@ with tf.Session() as session:
     for i in range(reps):
         rep_time = time.time()
         # make an optimization step
-        [_training] = session.run(
-            [training], feed_dict={data_states: train_images}
-        )
+        _training = session.run(training, feed_dict={data_states: train_images})
 
         if (i + 1) % partial_reps == 0:
             # evaluate tensors for saving and logging
-            [summary, params_numpy,_images_out,_images_out_big] = session.run(
-                [merge, tf.squeeze(parameters),images_out,images_out_big], feed_dict={data_states: train_images}
+            [summary, params_numpy, _images_out, _images_out_big] = session.run(
+                [merge, tf.squeeze(parameters), images_out, images_out_big],
+                feed_dict={data_states: train_images},
             )
             # save tensorboard data
-            writer.add_summary(summary, i+1)
-            
+            writer.add_summary(summary, i + 1)
+
             # save trained weights
             os.makedirs(save_string, exist_ok=True)
-            np.save(save_string+'trained_params.npy', params_numpy)
-            
+            np.save(save_string + 'trained_params.npy', params_numpy)
+
             # save output images as numpy arrays
-            np.save(save_string+'images_out.npy',_images_out)
-            np.save(save_string+'images_out_big.npy',_images_out_big)
-            
+            np.save(save_string + 'images_out.npy', _images_out)
+            np.save(save_string + 'images_out_big.npy', _images_out_big)
+
             print(
                 'Iteration: {:d} Single iteration time {:.3f}'.format(
-                    i+1, time.time() - rep_time
+                    i + 1, time.time() - rep_time
                 )
             )
 
