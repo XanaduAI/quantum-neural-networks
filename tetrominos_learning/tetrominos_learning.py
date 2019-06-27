@@ -56,7 +56,7 @@ cutoff = 11  # suggested value: 11
 im_dim = 4
 
 # Number of optimization steps (suggested: 50000)
-reps = 50000
+reps = 20000
 
 # Number of steps between data logging/saving.
 partial_reps = 1000
