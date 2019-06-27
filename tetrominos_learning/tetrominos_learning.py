@@ -79,7 +79,7 @@ norm_weight = 100.0
 train_images = np.zeros((num_images, im_dim, im_dim))
 
 # Target images: L,O,T,I,S,J,Z tetrominos.
-L, O, T, I, S, J, Z = np.zeros((num_images,im_dim, im_dim))
+L, O, T, I, S, J, Z = np.zeros((num_images, im_dim, im_dim))
 
 L = np.zeros((im_dim, im_dim))
 L[0, 0] = L[1, 0] = L[2, 0] = L[2, 1] = 1 / np.sqrt(4)
