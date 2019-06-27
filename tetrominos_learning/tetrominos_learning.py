@@ -81,7 +81,6 @@ train_images = np.zeros((num_images, im_dim, im_dim))
 # Target images: L,O,T,I,S,J,Z tetrominos.
 L, O, T, I, S, J, Z = np.zeros((num_images, im_dim, im_dim))
 
-L = np.zeros((im_dim, im_dim))
 L[0, 0] = L[1, 0] = L[2, 0] = L[2, 1] = 1 / np.sqrt(4)
 O[0, 0] = O[1, 1] = O[0, 1] = O[1, 0] = 1 / np.sqrt(4)
 T[0, 0] = T[0, 1] = T[0, 2] = T[1, 1] = 1 / np.sqrt(4)
