@@ -16,7 +16,7 @@ This repository contains the source code used to produce the results presented i
 
 * **Quantum autoencoder**: coming soon.
 
-* **Quantum fraud detection**: coming soon.
+* **Quantum fraud detection**: The folder `fraud_detection` contains the Python script `fraud_detection.py`, which builds and trains a hybrid classical/quantum model for fraud detection. Additional scripts are provided for visualizing the results.
 
 * **Tetronimo learning**: coming soon.
 
@@ -25,7 +25,7 @@ This repository contains the source code used to produce the results presented i
 
 ## Requirements
 
-To construct and optimize the variational quantum circuits, these scripts and notebooks use the TensorFlow backend of [Strawberry Fields](https://github.com/XanaduAI/strawberryfields). In addition, matplotlib is required for generating output plots.
+To construct and optimize the variational quantum circuits, these scripts and notebooks use the TensorFlow backend of [Strawberry Fields](https://github.com/XanaduAI/strawberryfields). **For this, you will need Strawberry Fields version 0.10.0 or lower.** In addition, matplotlib is required for generating output plots.
 
 
 ## Using the scripts
@@ -52,7 +52,7 @@ If you are doing any research using this source code and Strawberry Fields, plea
 
 > Nathan Killoran, Thomas R. Bromley, Juan Miguel Arrazola, Maria Schuld, Nicolás Quesada, and Seth Lloyd. Continuous-variable quantum neural networks. arXiv, 2018. [arXiv:1806.06871](https://arxiv.org/abs/1806.06871)
 
-> Nathan Killoran, Josh Izaac, Nicolás Quesada, Ville Bergholm, Matthew Amy, and Christian Weedbrook. Strawberry Fields: A Software Platform for Photonic Quantum Computing. arXiv, 2018. [arXiv:1804.03159](https://arxiv.org/abs/1804.03159)
+> Nathan Killoran, Josh Izaac, Nicolás Quesada, Ville Bergholm, Matthew Amy, and Christian Weedbrook. Strawberry Fields: A Software Platform for Photonic Quantum Computing. arXiv, 2018. [Quantum, 3, 129](https://quantum-journal.org/papers/q-2019-03-11-129/) (2019).
 
 ## License
 
