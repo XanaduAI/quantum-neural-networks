@@ -18,7 +18,7 @@ This repository contains the source code used to produce the results presented i
 
 * **Quantum fraud detection**: The folder `fraud_detection` contains the Python script `fraud_detection.py`, which builds and trains a hybrid classical/quantum model for fraud detection. Additional scripts are provided for visualizing the results.
 
-* **Tetronimo learning**: coming soon.
+* **Tetrominos learning**: The folder `tetrominos_learning` contains the Python script `tetrominos_learning.py`, which trains a continuous-variable (CV) quantum neural network. The task of the network is to encode 7 different 4X4 images, representing the (L,O,T,I,S,J,Z) [tetrominos](https://en.wikipedia.org/wiki/Tetromino), in the photon number distribution of two light modes. Once the training phase is completed, the script `plot_images.py` can be executed in order to generate a `.png` figure representing the final results.
 
 <img align='right' src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo_gif.gif">
 
