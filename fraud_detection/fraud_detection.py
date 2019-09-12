@@ -153,10 +153,10 @@ def input_qnn_layer():
         Dgate(tf.clip_by_value(output_layer[:, 8], -disp_clip, disp_clip), output_layer[:, 9]) \
         | q[0]
         Dgate(tf.clip_by_value(output_layer[:, 10], -disp_clip, disp_clip), output_layer[:, 11]) \
-        | q[0]
+        | q[1]
 
         Kgate(tf.clip_by_value(output_layer[:, 12], -kerr_clip, kerr_clip)) | q[0]
-        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[0]
+        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[1]
 
 
 # Defining standard QNN layers
