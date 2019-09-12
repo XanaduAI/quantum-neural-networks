@@ -27,7 +27,7 @@ from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 # Two modes required: one for "genuine" transactions and one for "fradulent"
 mode_number = 2
 # Number of photonic quantum layers
-depth = 6
+depth = 4
 
 # Fock basis truncation
 cutoff = 10

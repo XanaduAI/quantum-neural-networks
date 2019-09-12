@@ -27,12 +27,12 @@ from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 # Two modes required: one for "genuine" transactions and one for "fradulent"
 mode_number = 2
 # Number of photonic quantum layers
-depth = 6
+depth = 4
 
 # Fock basis truncation
 cutoff = 10
 # Number of batches in optimization
-reps = 10000
+reps = 50000
 
 # Label for simulation
 simulation_label = 1
