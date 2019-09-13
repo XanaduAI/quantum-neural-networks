@@ -190,18 +190,21 @@ def qnn_layer(layer_number):
 #                                   Defining QNN
 # ===================================================================================
 
-# construct the two-mode Strawberry Fields engine
-eng, q = sf.Engine(num_subsystems=mode_number)
+# construct the two-mode Strawberry Fields program
+prog = sf.Program(mode_number)
 
 # construct the circuit
-with eng:
+with prog.context as q:
     input_qnn_layer()
 
     for i in range(depth):
         qnn_layer(i)
 
+# create an engine
+eng = sf.Engine('tf', backend_options={"cutoff_dim": cutoff, "batch_size": batch_size})
+
 # run the engine (in batch mode)
-state = eng.run('tf', cutoff_dim=cutoff, eval=False, batch_size=batch_size)
+state = eng.run(prog, run_options={"eval": False}).state
 # extract the state
 ket = state.ket()
 
