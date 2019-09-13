@@ -57,7 +57,7 @@ checkpoint_string = folder_locator + 'models/' + model_string + '/'
 confusion_string = folder_locator + 'confusion/' + model_string + '/'
 
 # ===================================================================================
-#                                   Loading the training data
+#                                   Loading the testing data
 # ===================================================================================
 
 # Loading combined dataset with extra genuine datapoints unseen in training
