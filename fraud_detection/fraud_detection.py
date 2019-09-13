@@ -245,7 +245,7 @@ session.run(tf.global_variables_initializer())
 
 # Load previous model if non-zero ckpt_val is specified
 if ckpt_val != 0:
-    saver.restore(session, checkpoint_string + 'Sess.ckpt-' + str(ckpt_val))
+    saver.restore(session, checkpoint_string + 'sess.ckpt-' + str(ckpt_val))
 
 # TensorBoard writer
 writer = tf.summary.FileWriter(board_string)
