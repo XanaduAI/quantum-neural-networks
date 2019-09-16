@@ -32,7 +32,7 @@ depth = 4
 # Fock basis truncation
 cutoff = 10
 # Number of batches in optimization
-reps = 50000
+reps = 30000
 
 # Label for simulation
 simulation_label = 1
