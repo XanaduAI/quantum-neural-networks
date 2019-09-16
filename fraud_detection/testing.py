@@ -45,7 +45,7 @@ sq_clip = 5
 kerr_clip = 1
 
 # If loading from checkpoint, previous batch number reached
-ckpt_val = 50000
+ckpt_val = 30000
 
 model_string = str(simulation_label)
 
