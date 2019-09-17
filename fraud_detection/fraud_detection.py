@@ -27,12 +27,12 @@ from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 # Two modes required: one for "genuine" transactions and one for "fradulent"
 mode_number = 2
 # Number of photonic quantum layers
-depth = 6
+depth = 4
 
 # Fock basis truncation
 cutoff = 10
 # Number of batches in optimization
-reps = 10000
+reps = 30000
 
 # Label for simulation
 simulation_label = 1
@@ -153,10 +153,10 @@ def input_qnn_layer():
         Dgate(tf.clip_by_value(output_layer[:, 8], -disp_clip, disp_clip), output_layer[:, 9]) \
         | q[0]
         Dgate(tf.clip_by_value(output_layer[:, 10], -disp_clip, disp_clip), output_layer[:, 11]) \
-        | q[0]
+        | q[1]
 
         Kgate(tf.clip_by_value(output_layer[:, 12], -kerr_clip, kerr_clip)) | q[0]
-        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[0]
+        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[1]
 
 
 # Defining standard QNN layers
@@ -190,18 +190,21 @@ def qnn_layer(layer_number):
 #                                   Defining QNN
 # ===================================================================================
 
-# construct the two-mode Strawberry Fields engine
-eng, q = sf.Engine(num_subsystems=mode_number)
+# construct the two-mode Strawberry Fields program
+prog = sf.Program(mode_number)
 
 # construct the circuit
-with eng:
+with prog.context as q:
     input_qnn_layer()
 
     for i in range(depth):
         qnn_layer(i)
 
+# create an engine
+eng = sf.Engine('tf', backend_options={"cutoff_dim": cutoff, "batch_size": batch_size})
+
 # run the engine (in batch mode)
-state = eng.run('tf', cutoff_dim=cutoff, eval=False, batch_size=batch_size)
+state = eng.run(prog, run_options={"eval": False}).state
 # extract the state
 ket = state.ket()
 
@@ -242,7 +245,7 @@ session.run(tf.global_variables_initializer())
 
 # Load previous model if non-zero ckpt_val is specified
 if ckpt_val != 0:
-    saver.restore(session, checkpoint_string + 'Sess.ckpt-' + str(ckpt_val))
+    saver.restore(session, checkpoint_string + 'sess.ckpt-' + str(ckpt_val))
 
 # TensorBoard writer
 writer = tf.summary.FileWriter(board_string)

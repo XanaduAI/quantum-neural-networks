@@ -16,6 +16,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plot_confusion_matrix
 
+plt.switch_backend('agg')
+
 # Label for simulation
 simulation_label = 1
 

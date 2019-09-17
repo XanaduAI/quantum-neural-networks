@@ -27,7 +27,7 @@ from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 # Two modes required: one for "genuine" transactions and one for "fradulent"
 mode_number = 2
 # Number of photonic quantum layers
-depth = 6
+depth = 4
 
 # Fock basis truncation
 cutoff = 10
@@ -45,7 +45,7 @@ sq_clip = 5
 kerr_clip = 1
 
 # If loading from checkpoint, previous batch number reached
-ckpt_val = 0
+ckpt_val = 30000
 
 model_string = str(simulation_label)
 
@@ -57,7 +57,7 @@ checkpoint_string = folder_locator + 'models/' + model_string + '/'
 confusion_string = folder_locator + 'confusion/' + model_string + '/'
 
 # ===================================================================================
-#                                   Loading the training data
+#                                   Loading the testing data
 # ===================================================================================
 
 # Loading combined dataset with extra genuine datapoints unseen in training
@@ -143,10 +143,10 @@ def input_qnn_layer():
         Dgate(tf.clip_by_value(output_layer[:, 8], -disp_clip, disp_clip), output_layer[:, 9]) \
         | q[0]
         Dgate(tf.clip_by_value(output_layer[:, 10], -disp_clip, disp_clip), output_layer[:, 11]) \
-        | q[0]
+        | q[1]
 
         Kgate(tf.clip_by_value(output_layer[:, 12], -kerr_clip, kerr_clip)) | q[0]
-        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[0]
+        Kgate(tf.clip_by_value(output_layer[:, 13], -kerr_clip, kerr_clip)) | q[1]
 
 
 # Defining standard QNN layers
@@ -180,18 +180,21 @@ def qnn_layer(layer_number):
 #                                   Defining QNN
 # ===================================================================================
 
-# construct the two-mode Strawberry Fields engine
-eng, q = sf.Engine(num_subsystems=mode_number)
+# construct the two-mode Strawberry Fields program
+prog = sf.Program(mode_number)
 
 # construct the circuit
-with eng:
+with prog.context as q:
     input_qnn_layer()
 
     for i in range(depth):
         qnn_layer(i)
 
+# create an engine
+eng = sf.Engine('tf', backend_options={"cutoff_dim": cutoff, "batch_size": batch_size})
+
 # run the engine (in batch mode)
-state = eng.run('tf', cutoff_dim=cutoff, eval=False, batch_size=batch_size)
+state = eng.run(prog, run_options={"eval": False}).state
 # extract the state
 ket = state.ket()
 
