@@ -2,7 +2,7 @@
 
 # Continuous-variable quantum neural networks
 
-This repository contains the source code used to produce the results presented in *"Continuous-variable quantum neural networks"* [arXiv:1806.06871](https://arxiv.org/abs/1806.06871).
+This repository contains the source code used to produce the results presented in *"Continuous-variable quantum neural networks"* [Paper link](https://arxiv.org/abs/1806.06871).
 
 <br/>
 
@@ -52,7 +52,7 @@ Nathan Killoran, Thomas R. Bromley, Juan Miguel Arrazola, Maria Schuld, Nicolás
 
 If you are doing any research using this source code and Strawberry Fields, please cite the following two papers:
 
-> Nathan Killoran, Thomas R. Bromley, Juan Miguel Arrazola, Maria Schuld, Nicolás Quesada, and Seth Lloyd. Continuous-variable quantum neural networks. arXiv, 2018. [arXiv:1806.06871](https://arxiv.org/abs/1806.06871)
+> Nathan Killoran, Thomas R. Bromley, Juan Miguel Arrazola, Maria Schuld, Nicolás Quesada, and Seth Lloyd. Continuous-variable quantum neural networks. [Physical Review Research, 1(3), 033063](https://doi.org/10.1103/PhysRevResearch.1.033063) (2019).
 
 > Nathan Killoran, Josh Izaac, Nicolás Quesada, Ville Bergholm, Matthew Amy, and Christian Weedbrook. Strawberry Fields: A Software Platform for Photonic Quantum Computing. arXiv, 2018. [Quantum, 3, 129](https://quantum-journal.org/papers/q-2019-03-11-129/) (2019).
 
