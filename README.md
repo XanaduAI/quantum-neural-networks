@@ -2,7 +2,7 @@
 
 # Continuous-variable quantum neural networks
 
-This repository contains the source code used to produce the results presented in *"Continuous-variable quantum neural networks"* [Paper link](https://arxiv.org/abs/1806.06871).
+This repository contains the source code used to produce the results presented in [*"Continuous-variable quantum neural networks"*](https://arxiv.org/abs/1806.06871).
 
 <br/>
 
