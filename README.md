@@ -17,6 +17,10 @@ configuration**
 - TensorFlow version 1.3
 - Python version 3.5 or 3.6
 
+Your version of Python can be checked by running `python --version`. The correct versions of
+StrawberryFields and TensorFlow can be installed by running `pip install -r requirements.txt`
+from the main directory of this repository. 
+
 ## Contents
 
 <!-- <p align="center">
