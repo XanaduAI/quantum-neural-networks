@@ -6,6 +6,17 @@ This repository contains the source code used to produce the results presented i
 
 <br/>
 
+## Requirements
+
+To construct and optimize the variational quantum circuits, these scripts and notebooks use the TensorFlow backend of [Strawberry Fields](https://github.com/XanaduAI/strawberryfields). In addition, matplotlib is required for generating output plots.
+
+**Due to subsequent interface upgrades, these scripts will work only with the following
+configuration**
+ 
+- Strawberry Fields version 0.10.0
+- TensorFlow version 1.3
+- Python version 3.5 or 3.6
+
 ## Contents
 
 <!-- <p align="center">
@@ -21,14 +32,6 @@ This repository contains the source code used to produce the results presented i
 * **Tetrominos learning**: The folder `tetrominos_learning` contains the Python script `tetrominos_learning.py`, which trains a continuous-variable (CV) quantum neural network. The task of the network is to encode 7 different 4X4 images, representing the (L,O,T,I,S,J,Z) [tetrominos](https://en.wikipedia.org/wiki/Tetromino), in the photon number distribution of two light modes. Once the training phase is completed, the script `plot_images.py` can be executed in order to generate a `.png` figure representing the final results.
 
 <img align='right' src="https://github.com/XanaduAI/quantum-neural-networks/blob/master/static/tetronimo_gif.gif">
-
-
-## Requirements
-
-To construct and optimize the variational quantum circuits, these scripts and notebooks use the TensorFlow backend of [Strawberry Fields](https://github.com/XanaduAI/strawberryfields). In addition, matplotlib is required for generating output plots.
-
-**Due to subsequent interface upgrades, these scripts will work only with Strawberry Fields version <= 0.10.0.**
-
 
 ## Using the scripts
 
