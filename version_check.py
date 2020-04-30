@@ -18,11 +18,11 @@ if python_version < (3, 5):
                       "to run this script.".format(python_version.major, python_version.minor))
 
 if sf_version != "0.10.0":
-    raise ImportError("An incorrect version of StrawberryFields is installed. You must have "
+    raise ImportError("An incompatible version of StrawberryFields is installed. You must have "
                       "StrawberryFields version 0.10 to run this script. To install the correct "
                       "version, run:\n >>> pip install strawberryfields==0.10")
 
 if not(tf_version[0] == "1" and tf_version[1] == "3"):
-    raise ImportError("An incorrect version of TensorFlow is installed. You must have "
+    raise ImportError("An incompatible version of TensorFlow is installed. You must have "
                       "TensorFlow version 1.3 to run this script. To install the correct "
                       "version, run:\n >>> pip install tensorflow==1.3")
