@@ -25,6 +25,9 @@ import tensorflow as tf
 import strawberryfields as sf
 from strawberryfields.ops import *
 
+import sys
+sys.path.append("..")
+import version_check
 
 # ===================================================================================
 #                                   Hyperparameters

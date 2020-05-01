@@ -17,9 +17,12 @@ import strawberryfields as sf
 from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
 import time
 import os
+
+import sys
+sys.path.append("..")
+import version_check
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['OMP_NUM_THREADS'] = '1'

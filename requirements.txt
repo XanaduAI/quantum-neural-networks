@@ -1,0 +1,3 @@
+strawberryfields==0.10
+tensorflow==1.3
+matplotlib

@@ -20,6 +20,10 @@ import tensorflow as tf
 import strawberryfields as sf
 from strawberryfields.ops import Dgate, BSgate, Kgate, Sgate, Rgate
 
+import sys
+sys.path.append("..")
+import version_check
+
 # ===================================================================================
 #                                   Hyperparameters
 # ===================================================================================
@@ -180,21 +184,18 @@ def qnn_layer(layer_number):
 #                                   Defining QNN
 # ===================================================================================
 
-# construct the two-mode Strawberry Fields program
-prog = sf.Program(mode_number)
+# construct the two-mode Strawberry Fields engine
+eng, q = sf.Engine(mode_number)
 
 # construct the circuit
-with prog.context as q:
+with eng:
     input_qnn_layer()
 
     for i in range(depth):
         qnn_layer(i)
 
-# create an engine
-eng = sf.Engine('tf', backend_options={"cutoff_dim": cutoff, "batch_size": batch_size})
-
 # run the engine (in batch mode)
-state = eng.run(prog, run_options={"eval": False}).state
+state = eng.run("tf", cutoff_dim=cutoff, eval=False, batch_size=batch_size)
 # extract the state
 ket = state.ket()
 
