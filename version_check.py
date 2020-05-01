@@ -9,11 +9,7 @@ python_version = sys.version_info
 sf_version = sf.__version__
 tf_version = tf.__version__.split(".")
 
-if python_version > (3, 6):
-    raise SystemError("Your version of python is {}.{}. You must have Python 3.5 or 3.6 installed "
-                      "to run this script.".format(python_version.major, python_version.minor))
-
-if python_version < (3, 5):
+if python_version < (3, 5) or python_version > (3, 6):
     raise SystemError("Your version of python is {}.{}. You must have Python 3.5 or 3.6 installed "
                       "to run this script.".format(python_version.major, python_version.minor))
 
